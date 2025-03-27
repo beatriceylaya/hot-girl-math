@@ -11,9 +11,23 @@ const loanSchema = z.object({
   term: z.number().min(1, "Term must be at least 1"),
 });
 
+interface LoanResults {
+  monthlyPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+}
+
+interface TermComparison {
+  term: number;
+  label: string;
+  monthlyPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+}
+
 export default function HotGirlMathCalculator() {
-  const [results, setResults] = useState<any>(null);
-  const [termComparisons, setTermComparisons] = useState<any[]>([]);
+  const [results, setResults] = useState<LoanResults | null>(null);
+  const [termComparisons, setTermComparisons] = useState<TermComparison[]>([]);
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(loanSchema),
