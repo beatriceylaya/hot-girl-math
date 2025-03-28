@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-
+import CurrencyInput from 'react-currency-input-field';
 const loanSchema = z.object({
   loanAmount: z.number().min(100, "Loan amount must be at least Php100"),
   interestRate: z.number().min(0.1, "Interest rate must be positive"),
@@ -102,10 +102,12 @@ export default function HotGirlMathCalculator() {
               name="loanAmount"
               control={control}
               render={({ field }) => (
-                <input
-                  type="number"
-                  {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                <CurrencyInput
+                  prefix="₱"
+                  decimalsLimit={2}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                  allowNegativeValue={false}
+                  defaultValue={100}
                   className="w-full p-3 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500"
                 />
               )}
@@ -181,12 +183,26 @@ export default function HotGirlMathCalculator() {
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-white p-4 rounded-lg shadow">
                 <h3 className="text-pink-600 font-semibold">Monthly Payment</h3>
-                <p className="text-md font-bold">Php {results.monthlyPayment.toFixed(2)}</p>
+                <CurrencyInput
+                  id="monthly-payment"
+                  name="monthly-payment"
+                  value={results.monthlyPayment.toFixed(2)}
+                  prefix="Php "
+                  disabled
+                  className="text-md font-bold bg-transparent border-none p-0"
+                />
               </div>
               
               <div className="bg-white p-4 rounded-lg shadow">
                 <h3 className="text-pink-600 font-semibold">Total Interest</h3>
-                <p className="text-md font-bold">Php {results.totalInterest.toFixed(2)}</p>
+                <CurrencyInput
+                  id="total-interest"
+                  name="total-interest"
+                  value={results.totalInterest.toFixed(2)}
+                  prefix="Php "
+                  disabled
+                  className="text-md font-bold bg-transparent border-none p-0"
+                />
               </div>
               
               <div className="bg-white p-4 rounded-lg shadow">
@@ -205,9 +221,39 @@ export default function HotGirlMathCalculator() {
                   >
                     <h4 className="font-semibold text-pink-600">{comp.label}</h4>
                     <p>Term: {comp.term} months</p>
-                    <p>Monthly Payment: Php {comp.monthlyPayment.toFixed(2)}</p>
-                    <p>Total Interest: Php {comp.totalInterest.toFixed(2)}</p>
-                    <p>Total Payment: Php {comp.totalPayment.toFixed(2)}</p>
+                    <div className="flex items-center">
+                      <span className="mr-2">Monthly Payment:</span>
+                      <CurrencyInput
+                        id={`monthly-payment-${index}`}
+                        name={`monthly-payment-${index}`}
+                        value={comp.monthlyPayment.toFixed(2)}
+                        prefix="Php "
+                        disabled
+                        className="text-md bg-transparent border-none p-0"
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <span className="mr-2">Total Interest:</span>
+                      <CurrencyInput
+                        id={`total-interest-${index}`}
+                        name={`total-interest-${index}`}
+                        value={comp.totalInterest.toFixed(2)}
+                        prefix="Php "
+                        disabled
+                        className="text-md bg-transparent border-none p-0"
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <span className="mr-2">Total Payment:</span>
+                      <CurrencyInput
+                        id={`total-payment-${index}`}
+                        name={`total-payment-${index}`}
+                        value={comp.totalPayment.toFixed(2)}
+                        prefix="Php "
+                        disabled
+                        className="text-md bg-transparent border-none p-0"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
