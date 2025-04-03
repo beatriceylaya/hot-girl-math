@@ -157,7 +157,7 @@ export default function HotGirlMathCalculator() {
                 
                 <p>
                   <span className="font-semibold">Total Payment: </span>
-                  The full amount you'll repay, which is your monthly payment multiplied by the number of months.
+                  The full amount you&rsquo;ll repay, which is your monthly payment multiplied by the number of months.
                 </p>
                 
                 <p>
