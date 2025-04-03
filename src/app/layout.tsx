@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Hot Girl Math Calculator',
   description: 'A fun and empowering loan and financial calculator',
-  authors: [{ name: 'Your Name' }],
+  authors: [{ name: 'Beatrice Ylaya' }],
   keywords: ['finance', 'calculator', 'loans', 'financial planning'],
   openGraph: {
     title: 'Hot Girl Math Calculator',
